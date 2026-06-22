@@ -1,1547 +1,524 @@
 <!DOCTYPE html>
-<html lang="en">
+<!-- Sameera Webflow template — redesigned for Shree Varshaa M S -->
+<html data-wf-domain="sameeratemplate.webflow.io" data-wf-page="697ccdb3b74df8b40e0b77fe" data-wf-site="697ccdb1b74df8b40e0b771f" lang="en-US">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SHREE VARSHAA — Digital Universe</title>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Orbitron:wght@400;500;700;900&display=swap');
-
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-
-:root{
-  --void:#000008;
-  --plasma:#00f0ff;
-  --nebula:#7b2fff;
-  --solar:#ff6b35;
-  --ion:#00ff88;
-  --star:#ffffffee;
-  --dim:#ffffff33;
-  --glass:rgba(255,255,255,0.04);
-}
-
-html{scroll-behavior:smooth;overflow-x:hidden}
-body{
-  background:var(--void);
-  color:var(--star);
-  font-family:'Space Grotesk',sans-serif;
-  overflow-x:hidden;
-  cursor:none;
-}
-
-/* CUSTOM CURSOR */
-#cursor{
-  position:fixed;width:12px;height:12px;
-  background:var(--plasma);border-radius:50%;
-  pointer-events:none;z-index:9999;
-  transform:translate(-50%,-50%);
-  transition:transform 0.1s,width 0.2s,height 0.2s,background 0.2s;
-  mix-blend-mode:screen;
-  box-shadow:0 0 20px var(--plasma),0 0 40px var(--plasma);
-}
-#cursor-ring{
-  position:fixed;width:40px;height:40px;
-  border:1px solid rgba(0,240,255,0.4);border-radius:50%;
-  pointer-events:none;z-index:9998;
-  transform:translate(-50%,-50%);
-  transition:transform 0.15s,width 0.3s,height 0.3s;
-}
-body:has(a:hover) #cursor,body:has(button:hover) #cursor{
-  width:24px;height:24px;background:var(--nebula);
-}
-
-/* BACKGROUND VIDEO */
-#bg-video{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  object-fit:cover;z-index:0;opacity:0.15;
-  filter:hue-rotate(180deg) saturate(2) brightness(0.7);
-}
-
-/* CANVAS LAYERS */
-#particle-canvas,#connection-canvas{
-  position:fixed;top:0;left:0;width:100%;height:100%;
-  pointer-events:none;z-index:1;
-}
-
-/* SCROLL CONTAINER */
-#universe{
-  position:relative;z-index:2;
-}
-
-/* ───── LAYER 1: EMERGENCE ───── */
-#layer-emergence{
-  height:100vh;display:flex;align-items:center;justify-content:center;
-  position:relative;overflow:hidden;
-}
-
-.name-container{
-  text-align:center;position:relative;
-}
-
-.name-shree{
-  font-family:'Orbitron',monospace;
-  font-size:clamp(3rem,10vw,10rem);
-  font-weight:900;
-  letter-spacing:0.3em;
-  background:linear-gradient(135deg,#fff 0%,var(--plasma) 40%,var(--nebula) 70%,#fff 100%);
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  opacity:0;
-  animation:emerge 3s cubic-bezier(0.16,1,0.3,1) 0.5s forwards;
-  text-shadow:none;
-  position:relative;
-}
-
-.name-shree::after{
-  content:'SHREE VARSHAA';
-  position:absolute;inset:0;
-  background:linear-gradient(135deg,var(--plasma),var(--nebula));
-  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
-  background-clip:text;
-  filter:blur(30px);
-  opacity:0;
-  animation:nameGlow 3s ease 1.5s forwards;
-}
-
-.title-tag{
-  font-family:'Space Mono',monospace;
-  font-size:clamp(0.7rem,1.5vw,1rem);
-  letter-spacing:0.5em;
-  color:var(--plasma);
-  opacity:0;
-  animation:emerge 2s ease 2s forwards;
-  margin-top:1.5rem;
-  text-transform:uppercase;
-}
-
-.scroll-indicator{
-  position:absolute;bottom:3rem;left:50%;transform:translateX(-50%);
-  display:flex;flex-direction:column;align-items:center;gap:0.75rem;
-  opacity:0;animation:emerge 1s ease 3.5s forwards;
-}
-.scroll-indicator span{
-  font-family:'Space Mono',monospace;font-size:0.65rem;
-  letter-spacing:0.4em;color:var(--dim);
-}
-.scroll-line{
-  width:1px;height:60px;
-  background:linear-gradient(to bottom,var(--plasma),transparent);
-  animation:scrollPulse 2s ease-in-out infinite;
-}
-
-@keyframes emerge{from{opacity:0;transform:translateY(30px) scale(0.95)}to{opacity:1;transform:translateY(0) scale(1)}}
-@keyframes nameGlow{from{opacity:0}to{opacity:0.6}}
-@keyframes scrollPulse{0%,100%{scaleY:1;opacity:0.3}50%{opacity:1}}
-
-/* ───── LAYER 2: FLUTTER INTERFACES ───── */
-#layer-flutter{
-  min-height:100vh;display:flex;align-items:center;justify-content:center;
-  position:relative;padding:4rem 2rem;
-}
-
-.flutter-stage{
-  max-width:1200px;width:100%;display:grid;
-  grid-template-columns:1fr 1fr;gap:4rem;align-items:center;
-}
-
-.flutter-text{opacity:0;transform:translateX(-60px);transition:all 1s cubic-bezier(0.16,1,0.3,1)}
-.flutter-text.visible{opacity:1;transform:none}
-
-.section-eyebrow{
-  font-family:'Space Mono',monospace;font-size:0.7rem;
-  letter-spacing:0.5em;color:var(--plasma);
-  margin-bottom:1.5rem;text-transform:uppercase;
-}
-
-.section-heading{
-  font-family:'Orbitron',monospace;
-  font-size:clamp(1.8rem,4vw,3.5rem);
-  font-weight:700;line-height:1.1;
-  margin-bottom:1.5rem;
-}
-.section-heading .accent{color:var(--plasma)}
-
-.section-body{
-  font-size:1.05rem;line-height:1.8;
-  color:rgba(255,255,255,0.65);
-  margin-bottom:2rem;
-}
-
-.tech-chips{
-  display:flex;flex-wrap:wrap;gap:0.75rem;
-}
-.chip{
-  padding:0.4rem 1rem;
-  border:1px solid rgba(0,240,255,0.3);
-  border-radius:2rem;
-  font-family:'Space Mono',monospace;
-  font-size:0.7rem;letter-spacing:0.1em;
-  color:var(--plasma);
-  background:rgba(0,240,255,0.05);
-  transition:all 0.3s;
-}
-.chip:hover{
-  background:rgba(0,240,255,0.15);
-  box-shadow:0 0 20px rgba(0,240,255,0.3);
-  transform:translateY(-2px);
-}
-
-/* PHONE MOCKUP ASSEMBLY */
-.phone-assembly{
-  position:relative;height:500px;opacity:0;
-  transform:translateX(60px);transition:all 1.2s cubic-bezier(0.16,1,0.3,1) 0.3s;
-}
-.phone-assembly.visible{opacity:1;transform:none}
-
-.phone-frame{
-  position:absolute;top:50%;left:50%;
-  transform:translate(-50%,-50%);
-  width:220px;height:440px;
-  border:1.5px solid rgba(0,240,255,0.5);
-  border-radius:36px;
-  background:rgba(0,240,255,0.03);
-  box-shadow:0 0 60px rgba(0,240,255,0.15),inset 0 0 40px rgba(0,240,255,0.05);
-  overflow:hidden;
-}
-
-.phone-screen{
-  position:absolute;inset:6px;
-  border-radius:30px;
-  background:linear-gradient(160deg,#050a1a 0%,#0a0520 100%);
-  overflow:hidden;
-}
-
-.app-ui{
-  padding:1.5rem 1rem;
-  font-family:'Space Mono',monospace;
-  font-size:0.6rem;
-  color:var(--plasma);
-}
-
-.app-bar{
-  height:8px;width:60%;
-  background:linear-gradient(90deg,var(--plasma),var(--nebula));
-  border-radius:4px;margin-bottom:1rem;
-  animation:appBarPulse 3s ease-in-out infinite;
-}
-
-.app-list-item{
-  height:6px;background:rgba(255,255,255,0.1);
-  border-radius:3px;margin-bottom:0.6rem;
-  animation:shimmer 2s ease-in-out infinite;
-}
-.app-list-item:nth-child(odd){width:80%}
-.app-list-item:nth-child(even){width:60%}
-
-.app-card{
-  background:rgba(0,240,255,0.08);
-  border:1px solid rgba(0,240,255,0.2);
-  border-radius:8px;padding:0.75rem;margin:0.75rem 0;
-}
-
-.fragment{
-  position:absolute;
-  width:4px;height:4px;
-  background:var(--plasma);
-  border-radius:1px;
-  animation:fragmentFloat var(--dur,3s) ease-in-out infinite;
-  opacity:0.6;
-  box-shadow:0 0 8px var(--plasma);
-}
-
-@keyframes shimmer{0%,100%{opacity:0.4}50%{opacity:0.8}}
-@keyframes appBarPulse{0%,100%{box-shadow:0 0 10px rgba(0,240,255,0.3)}50%{box-shadow:0 0 30px rgba(0,240,255,0.7)}}
-@keyframes fragmentFloat{
-  0%{transform:translate(0,0) rotate(0deg);opacity:0.6}
-  33%{transform:translate(var(--dx1),var(--dy1)) rotate(120deg);opacity:1}
-  66%{transform:translate(var(--dx2),var(--dy2)) rotate(240deg);opacity:0.4}
-  100%{transform:translate(0,0) rotate(360deg);opacity:0.6}
-}
-
-/* ───── LAYER 3: API STREAMS ───── */
-#layer-api{
-  min-height:100vh;position:relative;
-  display:flex;align-items:center;justify-content:center;
-  padding:4rem 2rem;overflow:hidden;
-}
-
-.api-stage{
-  max-width:900px;width:100%;text-align:center;
-}
-
-.node-network{
-  position:relative;height:400px;margin:3rem 0;
-}
-
-.api-node{
-  position:absolute;
-  width:80px;height:80px;
-  border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Space Mono',monospace;
-  font-size:0.55rem;letter-spacing:0.05em;
-  text-align:center;
-  cursor:default;
-  transition:transform 0.3s;
-}
-.api-node:hover{transform:scale(1.2)!important}
-
-.api-node-inner{
-  width:60px;height:60px;border-radius:50%;
-  display:flex;align-items:center;justify-content:center;
-  font-size:0.55rem;letter-spacing:0.05em;text-align:center;
-  flex-direction:column;gap:2px;
-}
-
-.node-plasma{
-  background:radial-gradient(circle,rgba(0,240,255,0.3),rgba(0,240,255,0.05));
-  border:1px solid rgba(0,240,255,0.6);
-  box-shadow:0 0 30px rgba(0,240,255,0.4);
-}
-.node-nebula{
-  background:radial-gradient(circle,rgba(123,47,255,0.3),rgba(123,47,255,0.05));
-  border:1px solid rgba(123,47,255,0.6);
-  box-shadow:0 0 30px rgba(123,47,255,0.4);
-}
-.node-solar{
-  background:radial-gradient(circle,rgba(255,107,53,0.3),rgba(255,107,53,0.05));
-  border:1px solid rgba(255,107,53,0.6);
-  box-shadow:0 0 30px rgba(255,107,53,0.4);
-}
-.node-ion{
-  background:radial-gradient(circle,rgba(0,255,136,0.3),rgba(0,255,136,0.05));
-  border:1px solid rgba(0,255,136,0.6);
-  box-shadow:0 0 30px rgba(0,255,136,0.4);
-}
-
-.beam{
-  position:absolute;top:0;left:0;width:100%;height:100%;
-  pointer-events:none;
-}
-
-/* ───── LAYER 4: SKILLS OS ───── */
-#layer-skills{
-  min-height:100vh;position:relative;
-  display:flex;align-items:center;justify-content:center;
-  padding:4rem 2rem;
-}
-
-.skills-os{
-  max-width:1100px;width:100%;
-}
-
-.os-header{
-  font-family:'Space Mono',monospace;
-  font-size:0.7rem;letter-spacing:0.3em;
-  color:rgba(0,240,255,0.5);
-  margin-bottom:0.5rem;
-}
-
-.os-title{
-  font-family:'Orbitron',monospace;
-  font-size:clamp(1.5rem,3vw,2.5rem);
-  font-weight:700;margin-bottom:3rem;
-  opacity:0;transform:translateY(30px);
-  transition:all 0.8s ease;
-}
-.os-title.visible{opacity:1;transform:none}
-
-.skills-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
-  gap:1.5rem;
-}
-
-.skill-orb{
-  position:relative;padding:2rem;
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:16px;
-  background:rgba(255,255,255,0.02);
-  overflow:hidden;
-  cursor:default;
-  opacity:0;transform:scale(0.9) translateY(20px);
-  transition:all 0.6s cubic-bezier(0.16,1,0.3,1);
-  transition-delay:var(--delay,0s);
-}
-.skill-orb.visible{opacity:1;transform:none}
-.skill-orb::before{
-  content:'';position:absolute;inset:0;
-  background:radial-gradient(circle at var(--mx,50%) var(--my,50%),var(--orb-color,rgba(0,240,255,0.1)),transparent 70%);
-  opacity:0;transition:opacity 0.4s;
-}
-.skill-orb:hover::before{opacity:1}
-.skill-orb:hover{
-  border-color:var(--orb-border,rgba(0,240,255,0.4));
-  transform:translateY(-4px) scale(1.02);
-  box-shadow:0 20px 60px var(--orb-shadow,rgba(0,240,255,0.15));
-}
-
-.orb-icon{
-  font-size:2.5rem;margin-bottom:1rem;
-  display:block;
-  filter:drop-shadow(0 0 12px var(--orb-glow,var(--plasma)));
-  animation:orbPulse var(--orb-pulse,4s) ease-in-out infinite;
-}
-@keyframes orbPulse{0%,100%{filter:drop-shadow(0 0 12px var(--orb-glow,var(--plasma)))}50%{filter:drop-shadow(0 0 24px var(--orb-glow,var(--plasma)))}}
-
-.orb-name{
-  font-family:'Orbitron',monospace;
-  font-size:1rem;font-weight:700;
-  margin-bottom:0.5rem;
-  color:var(--orb-text,var(--plasma));
-}
-.orb-desc{
-  font-size:0.8rem;line-height:1.6;
-  color:rgba(255,255,255,0.5);
-}
-
-.orb-energy{
-  position:absolute;bottom:0;left:0;right:0;height:2px;
-  background:linear-gradient(90deg,transparent,var(--orb-text,var(--plasma)),transparent);
-  animation:energyFlow 3s linear infinite;
-}
-@keyframes energyFlow{from{transform:translateX(-100%)}to{transform:translateX(100%)}}
-
-/* ───── LAYER 5: PLANET PROJECTS ───── */
-#layer-projects{
-  min-height:100vh;position:relative;
-  display:flex;align-items:center;justify-content:center;
-  padding:4rem 2rem;overflow:hidden;
-}
-
-.solar-system{
-  max-width:1200px;width:100%;position:relative;
-}
-
-.planet-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
-  gap:2rem;margin-top:3rem;
-}
-
-.planet-card{
-  position:relative;overflow:hidden;
-  border-radius:24px;
-  padding:2.5rem;
-  cursor:pointer;
-  opacity:0;transform:translateY(40px) scale(0.95);
-  transition:all 0.8s cubic-bezier(0.16,1,0.3,1);
-  transition-delay:var(--delay,0s);
-}
-.planet-card.visible{opacity:1;transform:none}
-
-.planet-bg{
-  position:absolute;inset:0;
-  background:var(--planet-bg);
-  opacity:0.08;
-  transition:opacity 0.4s;
-}
-.planet-card:hover .planet-bg{opacity:0.15}
-.planet-card::before{
-  content:'';position:absolute;inset:0;
-  border:1px solid var(--planet-border);
-  border-radius:24px;
-  transition:box-shadow 0.4s;
-}
-.planet-card:hover::before{
-  box-shadow:0 0 40px var(--planet-glow),inset 0 0 40px rgba(255,255,255,0.02);
-}
-
-.planet-sphere{
-  width:80px;height:80px;border-radius:50%;
-  background:var(--planet-sphere);
-  margin-bottom:1.5rem;
-  position:relative;
-  animation:planetRotate 10s linear infinite;
-  box-shadow:var(--planet-shadow);
-}
-.planet-sphere::after{
-  content:'';position:absolute;
-  top:15%;left:15%;
-  width:70%;height:35%;
-  background:rgba(255,255,255,0.15);
-  border-radius:50%;
-  transform:rotate(-20deg);
-  filter:blur(4px);
-}
-@keyframes planetRotate{from{transform:rotate(0deg) scale(1)}50%{transform:rotate(180deg) scale(1.05)}to{transform:rotate(360deg) scale(1)}}
-
-.planet-type{
-  font-family:'Space Mono',monospace;
-  font-size:0.65rem;letter-spacing:0.3em;
-  color:var(--planet-accent);margin-bottom:0.75rem;text-transform:uppercase;
-}
-
-.planet-title{
-  font-family:'Orbitron',monospace;
-  font-size:1.2rem;font-weight:700;
-  margin-bottom:1rem;line-height:1.2;
-}
-
-.planet-desc{
-  font-size:0.85rem;line-height:1.7;
-  color:rgba(255,255,255,0.55);margin-bottom:1.5rem;
-}
-
-.planet-tags{
-  display:flex;flex-wrap:wrap;gap:0.5rem;
-}
-.planet-tag{
-  padding:0.25rem 0.75rem;
-  border:1px solid rgba(255,255,255,0.15);
-  border-radius:2rem;
-  font-family:'Space Mono',monospace;
-  font-size:0.6rem;color:rgba(255,255,255,0.6);
-}
-
-.planet-explore{
-  position:absolute;top:1.5rem;right:1.5rem;
-  font-family:'Space Mono',monospace;
-  font-size:0.6rem;letter-spacing:0.1em;
-  color:var(--planet-accent);
-  opacity:0;transform:translateX(10px);
-  transition:all 0.3s;
-}
-.planet-card:hover .planet-explore{opacity:1;transform:none}
-
-/* ───── LAYER 6: TIME TUNNEL ───── */
-#layer-journey{
-  min-height:120vh;position:relative;
-  display:flex;align-items:flex-start;justify-content:center;
-  padding:6rem 2rem;
-}
-
-.tunnel-container{
-  max-width:800px;width:100%;position:relative;
-}
-
-.tunnel-line{
-  position:absolute;left:50%;top:0;bottom:0;
-  width:1px;
-  background:linear-gradient(to bottom,transparent,var(--plasma) 20%,var(--nebula) 80%,transparent);
-  transform:translateX(-50%);
-}
-
-.milestone{
-  position:relative;display:flex;
-  align-items:flex-start;gap:3rem;
-  margin-bottom:5rem;
-  opacity:0;
-  transition:all 0.8s cubic-bezier(0.16,1,0.3,1);
-}
-.milestone.visible{opacity:1}
-.milestone:nth-child(odd){flex-direction:row-reverse;text-align:right}
-.milestone:nth-child(odd) .milestone-content{align-items:flex-end}
-
-.milestone-dot{
-  position:relative;flex-shrink:0;
-  width:16px;height:16px;border-radius:50%;
-  background:var(--plasma);
-  box-shadow:0 0 20px var(--plasma),0 0 40px rgba(0,240,255,0.3);
-  margin-top:0.4rem;
-  animation:dotPulse 2s ease-in-out infinite;
-  z-index:2;
-}
-@keyframes dotPulse{0%,100%{box-shadow:0 0 20px var(--plasma)}50%{box-shadow:0 0 40px var(--plasma),0 0 60px rgba(0,240,255,0.4)}}
-
-.milestone-content{
-  flex:1;display:flex;flex-direction:column;
-}
-
-.milestone-year{
-  font-family:'Space Mono',monospace;
-  font-size:0.7rem;letter-spacing:0.3em;
-  color:var(--plasma);margin-bottom:0.5rem;
-}
-
-.milestone-title{
-  font-family:'Orbitron',monospace;
-  font-size:1.1rem;font-weight:700;
-  margin-bottom:0.5rem;
-}
-
-.milestone-desc{
-  font-size:0.85rem;line-height:1.7;
-  color:rgba(255,255,255,0.5);
-}
-
-/* ───── LAYER 7: COMMAND CENTER ───── */
-#layer-contact{
-  min-height:100vh;
-  display:flex;align-items:center;justify-content:center;
-  padding:4rem 2rem;position:relative;
-}
-
-.command-center{
-  max-width:800px;width:100%;text-align:center;
-}
-
-.terminal-window{
-  background:rgba(0,0,0,0.7);
-  border:1px solid rgba(0,240,255,0.3);
-  border-radius:16px;
-  overflow:hidden;
-  box-shadow:0 0 80px rgba(0,240,255,0.1);
-  margin-top:3rem;
-}
-
-.terminal-header{
-  padding:0.75rem 1rem;
-  background:rgba(0,240,255,0.05);
-  border-bottom:1px solid rgba(0,240,255,0.15);
-  display:flex;align-items:center;gap:0.5rem;
-}
-
-.terminal-dot{
-  width:10px;height:10px;border-radius:50%;
-}
-.dot-red{background:#ff5f57}
-.dot-yellow{background:#febc2e}
-.dot-green{background:#28c840}
-
-.terminal-title{
-  font-family:'Space Mono',monospace;
-  font-size:0.7rem;color:rgba(255,255,255,0.4);
-  margin-left:0.5rem;letter-spacing:0.1em;
-}
-
-.terminal-body{
-  padding:2rem;text-align:left;
-  font-family:'Space Mono',monospace;font-size:0.85rem;
-  line-height:2;
-}
-
-.t-line{color:rgba(255,255,255,0.4)}
-.t-cmd{color:var(--plasma)}
-.t-out{color:var(--ion)}
-.t-link{
-  color:var(--nebula);text-decoration:none;
-  transition:color 0.2s,text-shadow 0.2s;
-}
-.t-link:hover{color:var(--plasma);text-shadow:0 0 20px var(--plasma)}
-
-.terminal-input-row{
-  display:flex;align-items:center;gap:0.5rem;
-  margin-top:1rem;
-  border-top:1px solid rgba(0,240,255,0.1);
-  padding-top:1rem;
-}
-.prompt{color:var(--ion)}
-.terminal-input{
-  flex:1;background:transparent;border:none;outline:none;
-  font-family:'Space Mono',monospace;font-size:0.85rem;
-  color:var(--star);caret-color:var(--plasma);
-}
-
-.contact-channels{
-  display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
-  gap:1rem;margin-top:2rem;
-}
-
-.channel{
-  padding:1.25rem;
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:12px;
-  text-align:center;
-  text-decoration:none;
-  display:block;
-  transition:all 0.3s;
-  background:rgba(255,255,255,0.02);
-}
-.channel:hover{
-  border-color:var(--plasma);
-  background:rgba(0,240,255,0.08);
-  transform:translateY(-4px);
-  box-shadow:0 12px 40px rgba(0,240,255,0.15);
-}
-.channel-icon{font-size:1.5rem;display:block;margin-bottom:0.5rem}
-.channel-label{
-  font-family:'Space Mono',monospace;font-size:0.65rem;
-  letter-spacing:0.15em;color:var(--plasma);
-  text-transform:uppercase;
-}
-.channel-value{
-  font-size:0.75rem;color:rgba(255,255,255,0.5);
-  margin-top:0.25rem;
-}
-
-/* ───── AMBIENT ELEMENTS ───── */
-.ambient-ring{
-  position:fixed;
-  border-radius:50%;
-  border:1px solid rgba(0,240,255,0.05);
-  pointer-events:none;z-index:0;
-  animation:ringPulse var(--duration,8s) ease-in-out infinite var(--delay2,0s);
-}
-@keyframes ringPulse{0%,100%{opacity:0.3;transform:translate(-50%,-50%) scale(1)}50%{opacity:0.08;transform:translate(-50%,-50%) scale(1.05)}}
-
-.starfield-dot{
-  position:fixed;border-radius:50%;
-  background:white;pointer-events:none;z-index:0;
-  animation:twinkle var(--dur2,3s) ease-in-out infinite var(--del,0s);
-}
-@keyframes twinkle{0%,100%{opacity:var(--base,0.3)}50%{opacity:var(--peak,0.8)}}
-
-/* NOISE OVERLAY */
-body::after{
-  content:'';position:fixed;inset:0;
-  background:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-  pointer-events:none;z-index:3;opacity:0.3;
-}
-
-/* NAV */
-#nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  padding:1.5rem 2rem;
-  display:flex;align-items:center;justify-content:space-between;
-  background:linear-gradient(to bottom,rgba(0,0,8,0.8),transparent);
-  backdrop-filter:blur(2px);
-}
-.nav-logo{
-  font-family:'Orbitron',monospace;font-size:0.9rem;
-  font-weight:700;letter-spacing:0.2em;color:var(--plasma);
-}
-.nav-links{display:flex;gap:2rem}
-.nav-link{
-  font-family:'Space Mono',monospace;font-size:0.65rem;
-  letter-spacing:0.2em;color:rgba(255,255,255,0.4);
-  text-decoration:none;text-transform:uppercase;
-  transition:color 0.2s;
-}
-.nav-link:hover{color:var(--plasma)}
-
-/* GLITCH EFFECT */
-@keyframes glitch1{
-  0%,100%{clip-path:inset(0 0 95% 0);transform:translate(-3px)}
-  20%{clip-path:inset(30% 0 50% 0);transform:translate(3px)}
-  40%{clip-path:inset(70% 0 10% 0);transform:translate(-1px)}
-  60%{clip-path:inset(5% 0 85% 0);transform:translate(2px)}
-  80%{clip-path:inset(60% 0 20% 0);transform:translate(-2px)}
-}
-
-/* SECTION DIVIDER */
-.cosmos-divider{
-  width:100%;height:1px;
-  background:linear-gradient(90deg,transparent,var(--plasma) 30%,var(--nebula) 50%,var(--plasma) 70%,transparent);
-  margin:0;opacity:0.3;
-}
-
-/* SCROLL PROGRESS */
-#progress{
-  position:fixed;top:0;left:0;height:2px;
-  background:linear-gradient(90deg,var(--plasma),var(--nebula),var(--solar));
-  z-index:200;transition:width 0.1s;box-shadow:0 0 10px var(--plasma);
-}
-
-/* HOLOGRAPHIC RIPPLE */
-.holo-ripple{
-  position:absolute;
-  border-radius:50%;
-  border:1px solid rgba(0,240,255,0.6);
-  animation:rippleOut 2s ease-out forwards;
-  pointer-events:none;
-}
-@keyframes rippleOut{
-  from{width:0;height:0;opacity:1;transform:translate(-50%,-50%)}
-  to{width:200px;height:200px;opacity:0;transform:translate(-50%,-50%)}
-}
-
-@media(max-width:768px){
-  .flutter-stage{grid-template-columns:1fr}
-  .phone-assembly{display:none}
-  .milestone:nth-child(odd){flex-direction:row;text-align:left}
-  .milestone:nth-child(odd) .milestone-content{align-items:flex-start}
-  .tunnel-line{left:2rem}
-  .milestone-dot{margin-left:0}
-  .nav-links{display:none}
-}
-
-@media(prefers-reduced-motion:reduce){
-  *{animation-duration:0.01ms!important;transition-duration:0.01ms!important}
-}
-</style>
+    <meta charset="utf-8" />
+    <link href="https://cdn.prod.website-files.com" rel="preconnect" crossorigin="anonymous" />
+    <title>Shree Varshaa — Flutter Developer</title>
+    <meta content="Shree Varshaa M S — Flutter Developer based in Chennai, building cross-platform mobile experiences and enterprise-scale digital systems." name="description" />
+    <meta content="Shree Varshaa — Flutter Developer" property="og:title" />
+    <meta content="Flutter Developer based in Chennai, building cross-platform mobile experiences." property="og:description" />
+    <meta property="og:type" content="website" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <link href="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/css/sameeratemplate.webflow.shared.b85c0319d.css" rel="stylesheet" type="text/css" integrity="sha384-uFwDGdLyYE+LHO8AsirEhf4H3U9fhcRW+pKREOcmeXRJyVocmuInIGYvTO2+jB8b" crossorigin="anonymous" />
+    <style>
+        html.w-mod-js:not(.w-mod-ix3) :is(.navbar-pill, .carousel-line-wrapper, [data-wf-target*='["697ccdb3b74df8b40e0b77fe","cdab6bbd-207a-ff22-2c67-4697803f417e"]'], .hero-title, .hero-image, .large-text-2) {
+            visibility: hidden !important;
+        }
+
+        /* ── Custom overrides for Shree Varshaa ── */
+
+        /* Hero: swap image placeholder for a video background */
+        .hero-image {
+            background: linear-gradient(135deg, #0a0a1a 0%, #0d1b2a 50%, #0a0a1a 100%);
+            position: relative;
+            overflow: hidden;
+        }
+        .hero-image::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 60% 60% at 30% 40%, rgba(0,180,255,0.18) 0%, transparent 70%),
+                radial-gradient(ellipse 50% 50% at 70% 60%, rgba(123,47,255,0.15) 0%, transparent 70%);
+            animation: heroGlow 6s ease-in-out infinite alternate;
+        }
+        .hero-image::after {
+            content: 'SV';
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: clamp(5rem, 18vw, 14rem);
+            font-weight: 900;
+            letter-spacing: -0.05em;
+            color: transparent;
+            -webkit-text-stroke: 1px rgba(0,200,255,0.25);
+            font-family: sans-serif;
+        }
+        @keyframes heroGlow {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Carousel pills — replace logos with tech stack labels */
+        .carousel-pill {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 20px;
+            font-size: 0.8rem;
+            font-weight: 500;
+            letter-spacing: 0.06em;
+            color: #888;
+            white-space: nowrap;
+        }
+        .carousel-pill img { display: none; }
+        .carousel-pill::after {
+            content: attr(data-label);
+        }
+
+        /* About grid stat cards — subtle accent */
+        .content-box h3 {
+            color: #111;
+        }
+
+        /* Experience cards — active role highlight */
+        .experience-display-card.current-role {
+            border-left: 3px solid #111;
+            padding-left: 1.5rem;
+        }
+
+        /* Service boxes — icon tint */
+        .service-box .icon-imge {
+            filter: invert(1);
+        }
+
+        /* Work cards custom project covers */
+        .work-card-image {
+            background-size: cover;
+            background-position: center;
+        }
+
+        /* Quote section */
+        .ending-section .quote-text-container {
+            font-size: clamp(1.4rem, 3vw, 2.2rem);
+        }
+
+        /* Footer name */
+        .footer-profile-image {
+            background: linear-gradient(135deg, #0d1b2a, #1a0a3a);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+    </style>
+    <script type="text/javascript">
+        !function(o,c){var n=c.documentElement,t=" w-mod-";n.className+=t+"js",("ontouchstart"in o||o.DocumentTouch&&c instanceof DocumentTouch)&&(n.className+=t+"touch")}(window,document);
+    </script>
+    <script src="https://unpkg.com/lenis@1.3.4/dist/lenis.min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.4/dist/lenis.css" />
 </head>
+
 <body>
-
-<div id="progress"></div>
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
-
-<video id="bg-video" autoplay muted loop playsinline>
-  <source src="bg.mp4" type="video/mp4">
-</video>
-
-<canvas id="particle-canvas"></canvas>
-<canvas id="connection-canvas"></canvas>
-
-<!-- AMBIENT RINGS -->
-<div class="ambient-ring" style="width:600px;height:600px;top:20%;left:10%;--duration:12s;--delay2:0s"></div>
-<div class="ambient-ring" style="width:400px;height:400px;top:60%;left:70%;--duration:9s;--delay2:3s"></div>
-<div class="ambient-ring" style="width:800px;height:800px;top:40%;left:40%;--duration:15s;--delay2:1s"></div>
-
-<!-- NAV -->
-<nav id="nav">
-  <div class="nav-logo">SV // OS</div>
-  <div class="nav-links">
-    <a class="nav-link" href="#layer-flutter">CRAFT</a>
-    <a class="nav-link" href="#layer-skills">CORE</a>
-    <a class="nav-link" href="#layer-projects">WORLDS</a>
-    <a class="nav-link" href="#layer-contact">CONNECT</a>
-  </div>
-</nav>
-
-<div id="universe">
-
-  <!-- ═══ LAYER 1: EMERGENCE ═══ -->
-  <section id="layer-emergence">
-    <div class="name-container">
-      <div class="name-shree">SHREE VARSHAA</div>
-      <div class="title-tag">Flutter Developer &nbsp;·&nbsp; Digital Architect &nbsp;·&nbsp; Chennai</div>
-    </div>
-    <div class="scroll-indicator">
-      <span>ENTER THE UNIVERSE</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
-
-  <div class="cosmos-divider"></div>
-
-  <!-- ═══ LAYER 2: FLUTTER INTERFACES ═══ -->
-  <section id="layer-flutter">
-    <div class="flutter-stage">
-      <div class="flutter-text">
-        <div class="section-eyebrow">// LAYER 02 — CRAFT</div>
-        <h2 class="section-heading">
-          Building apps<br>that feel like<br><span class="accent">magic.</span>
-        </h2>
-        <p class="section-body">
-          Cross-platform interfaces assembled from code—connecting human intent to backend reality. 
-          At Riota IoT Solutions, she forged entire enterprise workflows from concept to production, 
-          turning email chaos into elegant digital systems.
-        </p>
-        <div class="tech-chips">
-          <span class="chip">Flutter</span>
-          <span class="chip">Dart</span>
-          <span class="chip">REST APIs</span>
-          <span class="chip">Firebase</span>
-          <span class="chip">Android Studio</span>
-          <span class="chip">Postman</span>
-        </div>
-      </div>
-
-      <div class="phone-assembly" id="phoneAssembly">
-        <div class="phone-frame">
-          <div class="phone-screen">
-            <div class="app-ui">
-              <div class="app-card" style="border-color:rgba(0,240,255,0.4)">
-                <div style="color:rgba(0,240,255,0.8);font-size:0.55rem;margin-bottom:6px">CLOUD ADMIN TRACKER</div>
-                <div class="app-list-item"></div>
-                <div class="app-list-item"></div>
-                <div class="app-list-item"></div>
-              </div>
-              <div style="display:flex;gap:6px;margin:8px 0">
-                <div style="flex:1;height:40px;background:rgba(123,47,255,0.2);border:1px solid rgba(123,47,255,0.4);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:rgba(123,47,255,0.9)">PO MAP</div>
-                <div style="flex:1;height:40px;background:rgba(0,255,136,0.1);border:1px solid rgba(0,255,136,0.3);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:rgba(0,255,136,0.9)">ACCESS</div>
-              </div>
-              <div class="app-bar"></div>
-              <div class="app-list-item"></div>
-              <div class="app-list-item"></div>
-              <div style="height:30px;background:linear-gradient(135deg,rgba(0,240,255,0.2),rgba(123,47,255,0.2));border:1px solid rgba(0,240,255,0.3);border-radius:6px;margin-top:8px;display:flex;align-items:center;justify-content:center;font-size:0.5rem;color:rgba(0,240,255,0.9)">SUBMIT REQUEST</div>
+    <!-- ══════════════ NAV ══════════════ -->
+    <nav class="navbar-container">
+        <div class="navbar-pill">
+            <a id="w-node-_94594445-4b2d-3cba-1d6a-a4b0bf50ea61-bf50ea5f" href="/" aria-current="page" class="navbar-logo-container w-inline-block w--current">
+                <!-- Text logo replacing image -->
+                <span style="font-size:1rem;font-weight:700;letter-spacing:0.05em;color:#111">Shree Varshaa</span>
+            </a>
+            <div id="w-node-_94594445-4b2d-3cba-1d6a-a4b0bf50ea63-bf50ea5f" class="navbar-link-container">
+                <div id="w-node-_94594445-4b2d-3cba-1d6a-a4b0bf50ea64-bf50ea5f" class="navbar-link-flex">
+                    <a href="#about" class="navbar-link w--current">About</a>
+                    <a href="#services" class="navbar-link">Skills</a>
+                    <a href="#work" class="navbar-link">Projects</a>
+                    <a href="#contact" class="navbar-link mobile-only">Get in touch</a>
+                </div>
+                <div id="w-node-_94594445-4b2d-3cba-1d6a-a4b0bf50ea6d-bf50ea5f" class="navbar-contact-button-wrap">
+                    <a href="mailto:varshucodes@gmail.com" class="button no-icon w-inline-block">
+                        <div class="large-text-1">Get in touch</div>
+                    </a>
+                </div>
             </div>
-          </div>
+            <div id="w-node-_94594445-4b2d-3cba-1d6a-a4b0bf50ea71-bf50ea5f" data-w-id="94594445-4b2d-3cba-1d6a-a4b0bf50ea71" class="navbar-menu-button-wrapper">
+                <div class="navbar-menu-button-line"></div>
+                <div class="navbar-menu-button-line"></div>
+                <div class="navbar-menu-button-line"></div>
+            </div>
         </div>
-        <!-- Fragments around phone -->
-        <div class="fragment" style="top:10%;left:5%;--dur:4s;--dx1:20px;--dy1:-15px;--dx2:-10px;--dy2:10px"></div>
-        <div class="fragment" style="top:20%;right:8%;--dur:3.5s;--dx1:-15px;--dy1:20px;--dx2:10px;--dy2:-8px;background:var(--nebula)"></div>
-        <div class="fragment" style="top:70%;left:8%;--dur:5s;--dx1:10px;--dy1:15px;--dx2:-20px;--dy2:-10px;background:var(--ion)"></div>
-        <div class="fragment" style="top:80%;right:5%;--dur:4.5s;--dx1:-20px;--dy1:-10px;--dx2:15px;--dy2:5px"></div>
-        <div class="fragment" style="top:45%;left:2%;--dur:3.8s;--dx1:15px;--dy1:5px;--dx2:-5px;--dy2:-20px;background:var(--solar)"></div>
-        <div class="fragment" style="top:50%;right:2%;--dur:4.2s;--dx1:-10px;--dy1:-15px;--dx2:20px;--dy2:10px"></div>
-      </div>
-    </div>
-  </section>
+        <div class="nav-menu-blur-layer"></div>
+    </nav>
 
-  <!-- ═══ LAYER 3: API STREAMS ═══ -->
-  <section id="layer-api">
-    <div class="api-stage">
-      <div class="section-eyebrow" style="text-align:center">// LAYER 03 — CONNECTIONS</div>
-      <h2 class="section-heading" style="text-align:center;margin-bottom:0.5rem">
-        Data flows like <span class="accent">energy.</span>
-      </h2>
-      <p class="section-body" style="text-align:center;max-width:560px;margin:0 auto">
-        REST APIs connecting systems. Cloud workflows orchestrating operations. 
-        Every endpoint a synapse in the digital nervous system.
-      </p>
+    <div class="page-wrapper">
 
-      <div class="node-network" id="nodeNetwork">
-        <svg class="beam" id="beamSvg" viewBox="0 0 900 400" preserveAspectRatio="xMidYMid meet">
-          <defs>
-            <marker id="arrowPlasma" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6" fill="none" stroke="rgba(0,240,255,0.8)" stroke-width="1"/>
-            </marker>
-            <marker id="arrowNebula" markerWidth="6" markerHeight="6" refX="3" refY="3" orient="auto">
-              <path d="M0,0 L6,3 L0,6" fill="none" stroke="rgba(123,47,255,0.8)" stroke-width="1"/>
-            </marker>
-          </defs>
-        </svg>
+        <!-- ══════════════ HERO ══════════════ -->
+        <section class="hero-section">
+            <div class="hero-content-container">
+                <h1 class="hero-title">Flutter<br/>Developer</h1>
+                <div class="hero-image"></div>
+                <div class="hero-sub-text">
+                    <div class="large-text-2">Hello, I'm Shree Varshaa, a Flutter developer focused on crafting cross-platform mobile experiences that connect beautifully designed interfaces to robust backend systems.</div>
+                </div>
+            </div>
+        </section>
 
-        <!-- Central node -->
-        <div class="api-node node-plasma" style="top:50%;left:50%;transform:translate(-50%,-50%)" id="nodeCenter">
-          <div class="api-node-inner" style="background:radial-gradient(circle,rgba(0,240,255,0.2),transparent)">
-            <span style="font-size:1.2rem">⚡</span>
-            <span style="color:var(--plasma);font-size:0.55rem">MOBILE<br>APP</span>
-          </div>
-        </div>
+        <!-- ══════════════ MARQUEE / TECH CAROUSEL ══════════════ -->
+        <div class="carousel-section">
+            <div class="carousel-line-wrapper">
 
-        <div class="api-node node-nebula" style="top:10%;left:15%" id="nodeCloud">
-          <div class="api-node-inner"><span style="font-size:1.1rem">☁️</span><span style="color:rgba(123,47,255,0.9)">CLOUD<br>INFRA</span></div>
-        </div>
+                <!-- Row 1 — scrolling right -->
+                <div data-w-id="a9566e47-5a33-3718-c55e-08fd992c4170" style="opacity:0" class="carousel-line">
+                    <div class="carousel-pill" data-label="Flutter"></div>
+                    <div class="carousel-pill" data-label="Dart"></div>
+                    <div class="carousel-pill" data-label="REST APIs"></div>
+                    <div class="carousel-pill" data-label="Firebase"></div>
+                    <div class="carousel-pill" data-label="Git & GitHub"></div>
+                    <div class="carousel-pill" data-label="Python"></div>
+                    <div class="carousel-pill" data-label="Android Studio"></div>
+                    <div class="carousel-pill" data-label="Postman"></div>
+                </div>
 
-        <div class="api-node node-solar" style="top:10%;right:15%" id="nodeApi">
-          <div class="api-node-inner"><span style="font-size:1.1rem">🔗</span><span style="color:rgba(255,107,53,0.9)">REST<br>API</span></div>
-        </div>
+                <!-- Row 2 — scrolling left -->
+                <div data-w-id="e50a4a95-0e03-b0d1-adcb-620931fa07d4" style="opacity:0" class="carousel-line">
+                    <div class="carousel-pill" data-label="UI Development"></div>
+                    <div class="carousel-pill" data-label="Figma"></div>
+                    <div class="carousel-pill" data-label="Canva"></div>
+                    <div class="carousel-pill" data-label="HTML & CSS"></div>
+                    <div class="carousel-pill" data-label="VS Code"></div>
+                    <div class="carousel-pill" data-label="Django"></div>
+                    <div class="carousel-pill" data-label="Java"></div>
+                    <div class="carousel-pill" data-label="Cybersecurity"></div>
+                </div>
 
-        <div class="api-node node-ion" style="bottom:15%;left:20%" id="nodeDb">
-          <div class="api-node-inner"><span style="font-size:1.1rem">🗄️</span><span style="color:rgba(0,255,136,0.9)">DATA<br>STORE</span></div>
-        </div>
+                <!-- Row 3 — scrolling right -->
+                <div data-w-id="9f7dcd20-1f68-2097-0f4a-7c9237914221" style="opacity:0" class="carousel-line">
+                    <div class="carousel-pill" data-label="Flutter"></div>
+                    <div class="carousel-pill" data-label="Dart"></div>
+                    <div class="carousel-pill" data-label="REST APIs"></div>
+                    <div class="carousel-pill" data-label="Firebase"></div>
+                    <div class="carousel-pill" data-label="Git & GitHub"></div>
+                    <div class="carousel-pill" data-label="Python"></div>
+                    <div class="carousel-pill" data-label="Android Studio"></div>
+                    <div class="carousel-pill" data-label="Postman"></div>
+                </div>
 
-        <div class="api-node node-plasma" style="bottom:15%;right:20%" id="nodeIot">
-          <div class="api-node-inner"><span style="font-size:1.1rem">📡</span><span style="color:var(--plasma)">IoT<br>DEVICES</span></div>
-        </div>
-      </div>
-
-      <div style="display:flex;justify-content:center;gap:2rem;flex-wrap:wrap">
-        <div style="text-align:center;font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(255,255,255,0.5)">
-          <div style="color:var(--plasma);font-size:1.1rem;font-weight:700">2+</div>APPS BUILT
-        </div>
-        <div style="text-align:center;font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(255,255,255,0.5)">
-          <div style="color:var(--ion);font-size:1.1rem;font-weight:700">∞</div>ENDPOINTS
-        </div>
-        <div style="text-align:center;font-family:'Space Mono',monospace;font-size:0.7rem;color:rgba(255,255,255,0.5)">
-          <div style="color:var(--nebula);font-size:1.1rem;font-weight:700">100%</div>CROSS-PLATFORM
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ LAYER 4: SKILLS OS ═══ -->
-  <section id="layer-skills">
-    <div class="skills-os">
-      <div class="os-header">// SV.OS v1.0 — CORE SYSTEMS ONLINE</div>
-      <h2 class="os-title" id="skillsTitle">Skills are not listed.<br>They are <span class="accent">alive.</span></h2>
-
-      <div class="skills-grid">
-
-        <div class="skill-orb" style="--orb-color:rgba(0,240,255,0.12);--orb-border:rgba(0,240,255,0.5);--orb-shadow:rgba(0,240,255,0.2);--orb-glow:rgba(0,240,255,0.8);--orb-text:var(--plasma);--orb-pulse:3s;--delay:0s">
-          <span class="orb-icon">💎</span>
-          <div class="orb-name">FLUTTER</div>
-          <div class="orb-desc">Blue energy core — the primary force powering every interface. Cross-platform mastery, from widget trees to state management.</div>
-          <div class="orb-energy"></div>
+            </div>
         </div>
 
-        <div class="skill-orb" style="--orb-color:rgba(255,107,53,0.12);--orb-border:rgba(255,107,53,0.5);--orb-shadow:rgba(255,107,53,0.2);--orb-glow:rgba(255,107,53,0.8);--orb-text:#ff6b35;--orb-pulse:4s;--delay:0.15s">
-          <span class="orb-icon">🔥</span>
-          <div class="orb-name">FIREBASE</div>
-          <div class="orb-desc">Glowing cloud — real-time sync, auth, and cloud functions forming the backbone of data persistence.</div>
-          <div class="orb-energy" style="background:linear-gradient(90deg,transparent,#ff6b35,transparent)"></div>
-        </div>
+        <!-- ══════════════ ABOUT ══════════════ -->
+        <section id="about" class="section">
+            <div class="content-container">
+                <div class="home-about-grid">
+                    <a id="w-node-a8b3af82-d9a3-c5a6-ed60-6a8ba7f70d44-0e0b77fe" href="#contact" class="hero-about-image-card w-inline-block">
+                        <h2>About Me</h2>
+                        <div class="about-section-button-wrapper">
+                            <img src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/6986b70d2087f5d9abc94315_material-symbols_subdirectory-arrow-right-rounded.svg" loading="lazy" alt="" class="icon-imge" />
+                            <div>Get in touch</div>
+                        </div>
+                    </a>
+                    <div id="w-node-d85b08c1-b619-a329-cef0-8ef7dbdc0980-0e0b77fe" class="content-box flex-align-top">
+                        <h3>Shree Varshaa</h3>
+                        <div class="spacer _12px"></div>
+                        <div class="large-text-1 medium-font-weight grey-text">A Flutter developer crafting cross-platform mobile applications that merge clean UI with strategic backend integration — helping digital products ship faster and feel better.</div>
+                    </div>
+                    <div id="w-node-e4ca5088-fb80-5d1e-ae74-b8924579d9dc-0e0b77fe" class="content-box flex-align-middle">
+                        <h3>2+</h3>
+                        <div>Production Apps Shipped</div>
+                        <div class="spacer _12px"></div>
+                    </div>
+                    <div id="w-node-_085c2d31-1158-bbce-7ac4-80663464f696-0e0b77fe" class="content-box flex-align-middle">
+                        <h3>6+</h3>
+                        <div>Modules Built End-to-End</div>
+                        <div class="spacer _12px"></div>
+                    </div>
+                    <div id="w-node-_8941ed04-4512-2d68-062c-4e338a1c850c-0e0b77fe" class="content-box flex-align-middle">
+                        <h3>5+</h3>
+                        <div>Certifications Earned</div>
+                        <div class="spacer _12px"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="skill-orb" style="--orb-color:rgba(0,255,136,0.12);--orb-border:rgba(0,255,136,0.5);--orb-shadow:rgba(0,255,136,0.2);--orb-glow:rgba(0,255,136,0.8);--orb-text:#00ff88;--orb-pulse:5s;--delay:0.3s">
-          <span class="orb-icon">🌐</span>
-          <div class="orb-name">REST APIs</div>
-          <div class="orb-desc">Moving data streams — bidirectional communication channels linking frontend intent to backend truth.</div>
-          <div class="orb-energy" style="background:linear-gradient(90deg,transparent,#00ff88,transparent)"></div>
-        </div>
+        <!-- ══════════════ SKILLS / SERVICES ══════════════ -->
+        <section id="services" class="section">
+            <div class="content-container">
+                <div class="home-services-grid">
+                    <div id="w-node-_0fddbfdf-345d-ce9d-c444-c782273b2d50-0e0b77fe">
+                        <h2>Skills.</h2>
+                        <div class="spacer _12px"></div>
+                        <div class="large-text-1 medium-font-weight grey-text">What I bring to every project — from interface to infrastructure.</div>
+                    </div>
 
-        <div class="skill-orb" style="--orb-color:rgba(123,47,255,0.12);--orb-border:rgba(123,47,255,0.5);--orb-shadow:rgba(123,47,255,0.2);--orb-glow:rgba(123,47,255,0.8);--orb-text:#7b2fff;--orb-pulse:3.5s;--delay:0.45s">
-          <span class="orb-icon">🕸️</span>
-          <div class="orb-name">GIT & GITHUB</div>
-          <div class="orb-desc">Connected repository network — version-controlled evolution, branching realities merging into main.</div>
-          <div class="orb-energy" style="background:linear-gradient(90deg,transparent,#7b2fff,transparent)"></div>
-        </div>
+                    <a id="w-node-a4fc8278-3fc3-5552-37dd-3c75f9d52362-0e0b77fe" href="#work" class="content-box service-box w-inline-block">
+                        <img src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/6986bb2376e5008c97b4d6a5_material-symbols_mobile-layout.svg" loading="lazy" width="42" height="42" alt="" class="icon-imge medium-icon" />
+                        <div class="card-title">Flutter & Dart</div>
+                        <div class="grey-text">My primary craft — building cross-platform iOS and Android applications with responsive interfaces, reusable component architecture, and smooth state management.</div>
+                    </a>
 
-        <div class="skill-orb" style="--orb-color:rgba(255,230,0,0.1);--orb-border:rgba(255,220,0,0.4);--orb-shadow:rgba(255,220,0,0.15);--orb-glow:rgba(255,220,0,0.8);--orb-text:#ffd700;--orb-pulse:4.5s;--delay:0.6s">
-          <span class="orb-icon">🐍</span>
-          <div class="orb-name">PYTHON</div>
-          <div class="orb-desc">Scripting intelligence — automation, data manipulation, and Django-powered backend systems.</div>
-          <div class="orb-energy" style="background:linear-gradient(90deg,transparent,#ffd700,transparent)"></div>
-        </div>
+                    <a id="w-node-_5bdae43d-f6f3-357b-5e53-df6bfcba70aa-0e0b77fe" href="#work" class="content-box service-box w-inline-block">
+                        <img src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/6986bb3208eaf8e6cfdc76c1_material-symbols_web.svg" loading="lazy" width="42" height="42" alt="" class="icon-imge medium-icon" />
+                        <div class="card-title">REST API Integration</div>
+                        <div class="grey-text">Connecting frontend flows to backend systems through well-structured API communication, file upload workflows, and request lifecycle management.</div>
+                    </a>
 
-        <div class="skill-orb" style="--orb-color:rgba(0,150,255,0.1);--orb-border:rgba(0,150,255,0.4);--orb-shadow:rgba(0,150,255,0.15);--orb-glow:rgba(0,150,255,0.8);--orb-text:#0096ff;--orb-pulse:4s;--delay:0.75s">
-          <span class="orb-icon">🎨</span>
-          <div class="orb-name">UI DESIGN</div>
-          <div class="orb-desc">Interface alchemy — Figma wireframes crystallized into pixel-perfect, reusable UI components.</div>
-          <div class="orb-energy" style="background:linear-gradient(90deg,transparent,#0096ff,transparent)"></div>
-        </div>
+                    <a id="w-node-c7c2c533-7e53-e5f7-aaa8-b2e47ea3b78e-0e0b77fe" href="#work" class="content-box service-box w-inline-block">
+                        <img src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/6986ba710f09b820907e1c0b_material-symbols_animated-images.svg" loading="lazy" width="42" height="42" alt="" class="icon-imge medium-icon" />
+                        <div class="card-title">UI Design & Figma</div>
+                        <div class="grey-text">Designing reusable UI components with solid validation logic, translating Figma prototypes into production-ready Flutter widgets that delight users.</div>
+                    </a>
 
-      </div>
-    </div>
-  </section>
+                    <a id="w-node-e614f05b-2626-d599-546c-34e08ef0de8b-0e0b77fe" href="#work" class="content-box service-box w-inline-block">
+                        <img src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/6986bb1d5d8f4bc5531608f6_material-symbols_brand-family.svg" loading="lazy" width="42" height="42" alt="" class="icon-imge medium-icon" />
+                        <div class="card-title">Firebase & Backend</div>
+                        <div class="grey-text">Integrating Firebase for real-time data, authentication, and cloud functions — alongside Python and Django for backend-powered features and automation.</div>
+                    </a>
+                </div>
+            </div>
+        </section>
 
-  <!-- ═══ LAYER 5: PLANET PROJECTS ═══ -->
-  <section id="layer-projects">
-    <div class="solar-system">
-      <div class="section-eyebrow">// LAYER 05 — WORLDS BUILT</div>
-      <h2 class="section-heading">Every project<br>is a <span class="accent">universe.</span></h2>
+        <!-- ══════════════ EXPERIENCE ══════════════ -->
+        <section class="section">
+            <div class="content-container">
+                <h2>Experience.</h2>
+                <div class="spacer _48px"></div>
+                <div class="experience-flex">
 
-      <div class="planet-grid">
+                    <div data-w-id="5a0bf9ca-9f38-6b31-d3c6-744ae881e7bf" style="opacity:0" class="experience-display-card">
+                        <div class="experience-display-card-text-wrapper">
+                            <div class="large-text-1 medium-font-weight">B.E. Computer Science — Annamalai University</div>
+                            <div class="grey-text">Graduated with a CGPA of 7.52/10. Led the CSI Executive Committee, organised technical events, and coordinated the COMPSEM departmental symposium.</div>
+                        </div>
+                        <div class="experience-display-card-text-wrapper year-text">
+                            <div class="card-title">2020–2024</div>
+                        </div>
+                    </div>
 
-        <div class="planet-card"
-          style="--planet-bg:linear-gradient(135deg,rgba(0,240,255,1),rgba(123,47,255,1));--planet-border:rgba(0,240,255,0.3);--planet-glow:rgba(0,240,255,0.3);--planet-sphere:linear-gradient(135deg,#00f0ff,#7b2fff);--planet-shadow:0 0 40px rgba(0,240,255,0.4);--planet-accent:var(--plasma);--delay:0.1s"
-          onclick="enterPlanet(this,'Cloud Admin Tracker','An internal enterprise system replacing fragmented email workflows. Modules: PO mapping, cloud access, user registry, onboarding, credit allocation, device access. Built with Flutter, integrated via REST APIs, with file upload and full workflow management.','Flutter · Dart · REST APIs · Firebase · UI Components')">
-          <div class="planet-bg"></div>
-          <div class="planet-sphere"></div>
-          <div class="planet-type">ENTERPRISE SYSTEM</div>
-          <h3 class="planet-title">Cloud Admin<br>Tracker</h3>
-          <p class="planet-desc">An internal galaxy replacing email chaos. Six modules. Zero bottlenecks. Complete enterprise orbit in one Flutter application.</p>
-          <div class="planet-tags">
-            <span class="planet-tag">Flutter</span>
-            <span class="planet-tag">REST APIs</span>
-            <span class="planet-tag">Firebase</span>
-            <span class="planet-tag">Riota IoT</span>
-          </div>
-          <span class="planet-explore">EXPLORE WORLD →</span>
-        </div>
+                    <div data-w-id="0511377d-28ab-2b76-cbea-93fb2acf03c4" style="opacity:0" class="experience-display-card">
+                        <div class="experience-display-card-text-wrapper">
+                            <div class="large-text-1 medium-font-weight">Certifications Sprint</div>
+                            <div class="grey-text">Flutter Development Bootcamp (Udemy) · Python & Django (Udemy) · Java Full Stack · Android Dev Training (NSIC) · Cybersecurity Fundamentals (Coursera).</div>
+                        </div>
+                        <div class="experience-display-card-text-wrapper year-text">
+                            <div class="card-title">2020–2025</div>
+                        </div>
+                    </div>
 
-        <div class="planet-card"
-          style="--planet-bg:linear-gradient(135deg,rgba(255,107,53,1),rgba(255,200,0,1));--planet-border:rgba(255,107,53,0.3);--planet-glow:rgba(255,107,53,0.3);--planet-sphere:linear-gradient(135deg,#ff6b35,#ffd700);--planet-shadow:0 0 40px rgba(255,107,53,0.4);--planet-accent:#ff6b35;--delay:0.25s"
-          onclick="enterPlanet(this,'IoT Cooling Control','An automation system fusing temperature sensing with object detection. Smart fan control that responds to environmental conditions in real-time, achieving significant energy savings through rule-based automation logic.','IoT · Sensors · Python · Automation · Embedded Systems')">
-          <div class="planet-bg"></div>
-          <div class="planet-sphere" style="background:linear-gradient(135deg,#ff6b35,#ffd700);box-shadow:0 0 40px rgba(255,107,53,0.4)"></div>
-          <div class="planet-type">SMART CITY · IoT</div>
-          <h3 class="planet-title">Automatic Cooling<br>Control System</h3>
-          <p class="planet-desc">A futuristic smart city in miniature—where temperature and presence data converge to create intelligent, energy-aware environments.</p>
-          <div class="planet-tags">
-            <span class="planet-tag">IoT</span>
-            <span class="planet-tag">Automation</span>
-            <span class="planet-tag">Sensors</span>
-            <span class="planet-tag">Python</span>
-          </div>
-          <span class="planet-explore">EXPLORE WORLD →</span>
-        </div>
+                    <div data-w-id="33e8edeb-e512-a412-304f-342abe61c971" style="opacity:0" class="experience-display-card current-role">
+                        <div class="experience-display-card-text-wrapper">
+                            <div class="large-text-1 medium-font-weight">Flutter Developer — Riota IoT Solutions</div>
+                            <div class="grey-text">Building and maintaining cross-platform production apps. Developed the Cloud Admin Tracker (CAT) — a full enterprise system replacing email workflows, covering PO mapping, cloud access, onboarding, and device management.</div>
+                        </div>
+                        <div class="experience-display-card-text-wrapper year-text">
+                            <div class="card-title">Apr 2025 – Present</div>
+                        </div>
+                    </div>
 
-        <div class="planet-card"
-          style="--planet-bg:linear-gradient(135deg,rgba(0,255,136,1),rgba(0,150,255,1));--planet-border:rgba(0,255,136,0.3);--planet-glow:rgba(0,255,136,0.3);--planet-sphere:linear-gradient(135deg,#00ff88,#0096ff);--planet-shadow:0 0 40px rgba(0,255,136,0.4);--planet-accent:#00ff88;--delay:0.4s"
-          onclick="enterPlanet(this,'Attendance Management System','A digital academy built on VB.NET for comprehensive academic record tracking. User management, attendance monitoring, and reporting features ensuring institutional accountability with precision.','VB.NET · Database · UI Design · Academic Systems')">
-          <div class="planet-bg"></div>
-          <div class="planet-sphere" style="background:linear-gradient(135deg,#00ff88,#0096ff);box-shadow:0 0 40px rgba(0,255,136,0.4)"></div>
-          <div class="planet-type">DIGITAL ACADEMY</div>
-          <h3 class="planet-title">Attendance<br>Management System</h3>
-          <p class="planet-desc">A structured academic world where attendance transforms from paper trails into digital clarity—every student, every session, tracked.</p>
-          <div class="planet-tags">
-            <span class="planet-tag">VB.NET</span>
-            <span class="planet-tag">Database</span>
-            <span class="planet-tag">UI Design</span>
-          </div>
-          <span class="planet-explore">EXPLORE WORLD →</span>
-        </div>
+                </div>
+            </div>
+        </section>
 
-        <div class="planet-card"
-          style="--planet-bg:linear-gradient(135deg,rgba(255,100,200,1),rgba(123,47,255,1));--planet-border:rgba(255,100,200,0.3);--planet-glow:rgba(255,100,200,0.3);--planet-sphere:linear-gradient(135deg,#ff64c8,#7b2fff);--planet-shadow:0 0 40px rgba(255,100,200,0.4);--planet-accent:#ff64c8;--delay:0.55s"
-          onclick="enterPlanet(this,'Syrup Extractor for Blind','An accessibility innovation: a trigger-based dispensing device delivering fixed syrup quantities per activation. ~90% accuracy, designed for visually impaired users. Technology in service of human dignity.','Hardware Design · Accessibility · Embedded Systems · Human Factors')">
-          <div class="planet-bg"></div>
-          <div class="planet-sphere" style="background:linear-gradient(135deg,#ff64c8,#7b2fff);box-shadow:0 0 40px rgba(255,100,200,0.4)"></div>
-          <div class="planet-type">ACCESSIBILITY · INNOVATION</div>
-          <h3 class="planet-title">Syrup Extractor<br>for the Blind</h3>
-          <p class="planet-desc">An accessibility world where precise engineering meets human empathy—90% dispensing accuracy giving independence back to those who need it.</p>
-          <div class="planet-tags">
-            <span class="planet-tag">Accessibility</span>
-            <span class="planet-tag">Hardware</span>
-            <span class="planet-tag">Embedded</span>
-          </div>
-          <span class="planet-explore">EXPLORE WORLD →</span>
-        </div>
+        <!-- ══════════════ WORK / PROJECTS ══════════════ -->
+        <section id="work" class="section">
+            <div class="content-container">
+                <h2>Work.</h2>
+                <div class="large-text-1 medium-font-weight grey-text">A selection of projects — enterprise systems, IoT, and accessibility innovation.</div>
+                <div class="spacer _48px"></div>
 
-      </div>
-    </div>
-  </section>
+                <div class="work-slider-wrapper">
+                    <div data-delay="4000" data-animation="slide" class="work-slider w-slider" data-autoplay="false" data-easing="ease" data-hide-arrows="true" data-disable-swipe="false" data-autoplay-limit="0" data-nav-spacing="3" data-duration="500" data-infinite="false">
+                        <div class="slider-mask w-slider-mask">
 
-  <!-- PROJECT ZOOM OVERLAY -->
-  <div id="projectOverlay" style="display:none;position:fixed;inset:0;z-index:500;background:rgba(0,0,8,0.97);backdrop-filter:blur(20px);display:none;align-items:center;justify-content:center;padding:2rem">
-    <div style="max-width:600px;width:100%;text-align:center">
-      <div id="overlayType" style="font-family:'Space Mono',monospace;font-size:0.65rem;letter-spacing:0.3em;color:var(--plasma);margin-bottom:1rem;text-transform:uppercase"></div>
-      <h2 id="overlayTitle" style="font-family:'Orbitron',monospace;font-size:2.5rem;font-weight:900;margin-bottom:1.5rem"></h2>
-      <p id="overlayDesc" style="font-size:0.95rem;line-height:1.9;color:rgba(255,255,255,0.65);margin-bottom:2rem"></p>
-      <div id="overlayTech" style="font-family:'Space Mono',monospace;font-size:0.7rem;color:var(--ion);letter-spacing:0.1em;margin-bottom:2.5rem"></div>
-      <button onclick="exitPlanet()" style="padding:0.75rem 2.5rem;border:1px solid rgba(0,240,255,0.4);border-radius:2rem;background:transparent;color:var(--plasma);font-family:'Space Mono',monospace;font-size:0.75rem;letter-spacing:0.2em;cursor:pointer;transition:all 0.3s">EXIT WORLD</button>
-    </div>
-  </div>
+                            <!-- Project 1: Cloud Admin Tracker -->
+                            <div class="w-slide">
+                                <div class="w-dyn-list">
+                                    <div role="list" class="collection-list w-dyn-items">
+                                        <div role="listitem" class="collection-item w-dyn-item">
+                                            <a aria-label="Cloud Admin Tracker" href="#" class="work-card w-inline-block">
+                                                <div data-w-id="b38d5679-e6d3-c096-422d-2bcafff62a19"
+                                                    style="background:linear-gradient(135deg,#0a0f2e 0%,#0d2240 50%,#091a35 100%);opacity:0"
+                                                    class="work-card-image">
+                                                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.35">📱</div>
+                                                </div>
+                                                <div data-w-id="b38d5679-e6d3-c096-422d-2bcafff62a1a" style="opacity:0" class="work-card-text-container">
+                                                    <div class="large-text-1 medium-font-weight">Cloud Admin Tracker</div>
+                                                    <div class="spacer _12px"></div>
+                                                    <div class="grey-text">Enterprise Flutter app replacing email-based request handling at Riota IoT Solutions. Modules: PO mapping, cloud access, user registry, onboarding, credit allocation, and device management.</div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-  <!-- ═══ LAYER 6: TIME TUNNEL ═══ -->
-  <section id="layer-journey">
-    <div class="tunnel-container">
-      <div class="tunnel-line"></div>
-      <div class="section-eyebrow" style="margin-bottom:3rem">// LAYER 06 — TRAJECTORY</div>
+                            <!-- Project 2: IoT Cooling System -->
+                            <div class="w-slide">
+                                <div class="w-dyn-list">
+                                    <div role="list" class="collection-list w-dyn-items">
+                                        <div role="listitem" class="collection-item w-dyn-item">
+                                            <a aria-label="IoT Cooling System" href="#" class="work-card w-inline-block">
+                                                <div data-w-id="b27ea440-490c-6ad0-cc8f-656e963f7972"
+                                                    style="background:linear-gradient(135deg,#0f1f0a 0%,#1a3a10 50%,#0a1f08 100%);opacity:0"
+                                                    class="work-card-image">
+                                                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.35">🌡️</div>
+                                                </div>
+                                                <div data-w-id="b27ea440-490c-6ad0-cc8f-656e963f7973" style="opacity:0" class="work-card-text-container">
+                                                    <div class="large-text-1 medium-font-weight">Automatic Cooling Control — IoT</div>
+                                                    <div class="spacer _12px"></div>
+                                                    <div class="grey-text">IoT automation system using temperature and object detection to trigger automatic fan control. Improved energy efficiency through rule-based environmental sensing.</div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-      <div class="milestone" id="m1">
-        <div class="milestone-dot"></div>
-        <div class="milestone-content">
-          <div class="milestone-year">2020 — ORIGIN</div>
-          <div class="milestone-title">Annamalai University</div>
-          <div class="milestone-desc">Computer Science and Engineering. CGPA 7.52. Where the spark of code became a calling. Led student technology chapters, organized events, and built the first systems.</div>
-        </div>
-      </div>
+                            <!-- Project 3: Attendance System -->
+                            <div class="w-slide">
+                                <div class="w-dyn-list">
+                                    <div role="list" class="collection-list w-dyn-items">
+                                        <div role="listitem" class="collection-item w-dyn-item">
+                                            <a aria-label="Attendance Management System" href="#" class="work-card w-inline-block">
+                                                <div data-w-id="ae4f3b3a-bbf3-abe2-314b-c4406f33bf4c"
+                                                    style="background:linear-gradient(135deg,#1a0a2e 0%,#2d1060 50%,#1a0a2e 100%);opacity:0"
+                                                    class="work-card-image">
+                                                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.35">🎓</div>
+                                                </div>
+                                                <div data-w-id="ae4f3b3a-bbf3-abe2-314b-c4406f33bf4d" style="opacity:0" class="work-card-text-container">
+                                                    <div class="large-text-1 medium-font-weight">Attendance Management System</div>
+                                                    <div class="spacer _12px"></div>
+                                                    <div class="grey-text">VB.NET academic record tracking system with user management, attendance monitoring, and reporting — built for institutional accountability and ease of use.</div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-      <div class="milestone" id="m2">
-        <div class="milestone-dot" style="background:var(--nebula);box-shadow:0 0 20px var(--nebula)"></div>
-        <div class="milestone-content">
-          <div class="milestone-year">2022–2023 — FIRST BUILDS</div>
-          <div class="milestone-title">Hardware Meets Software</div>
-          <div class="milestone-desc">Attendance systems in VB.NET. Syrup dispensers for accessibility. IoT automation experiments. The first tangible things that existed in the world because she made them.</div>
-        </div>
-      </div>
+                            <!-- Project 4: Syrup Extractor -->
+                            <div class="w-slide">
+                                <div class="w-dyn-list">
+                                    <div role="list" class="collection-list w-dyn-items">
+                                        <div role="listitem" class="collection-item w-dyn-item">
+                                            <a aria-label="Syrup Extractor for the Blind" href="#" class="work-card w-inline-block">
+                                                <div data-w-id="proj4img"
+                                                    style="background:linear-gradient(135deg,#1f0a0a 0%,#3a1010 50%,#1f0a0a 100%);opacity:0"
+                                                    class="work-card-image">
+                                                    <div style="width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:4rem;opacity:0.35">♿</div>
+                                                </div>
+                                                <div data-w-id="proj4txt" style="opacity:0" class="work-card-text-container">
+                                                    <div class="large-text-1 medium-font-weight">Syrup Extractor for the Blind</div>
+                                                    <div class="spacer _12px"></div>
+                                                    <div class="grey-text">Assistive hardware device delivering a fixed syrup quantity per trigger activation. ~90% dispensing accuracy — designed to restore independence for visually impaired users.</div>
+                                                </div>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
 
-      <div class="milestone" id="m3">
-        <div class="milestone-dot" style="background:var(--solar);box-shadow:0 0 20px var(--solar)"></div>
-        <div class="milestone-content">
-          <div class="milestone-year">2024 — GRADUATION + CERTIFICATION SPRINT</div>
-          <div class="milestone-title">Stacking the Stack</div>
-          <div class="milestone-desc">Android Dev (NSIC). Python & Django (Udemy). Java Full Stack. Flutter Bootcamp. Cybersecurity fundamentals. Building a complete map of the digital landscape before charting the course.</div>
-        </div>
-      </div>
+                            <!-- End Slide -->
+                            <div class="w-slide">
+                                <div class="work-slider-end-item">
+                                    <div class="vertical-line"></div>
+                                    <a href="mailto:varshucodes@gmail.com" class="button w-inline-block">
+                                        <div class="large-text-1">Let's collaborate</div>
+                                        <img src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/6986bb7e24019c506117cb1d_material-symbols_arrow-forward-rounded.svg" loading="lazy" alt="" class="icon-imge" />
+                                    </a>
+                                </div>
+                            </div>
 
-      <div class="milestone" id="m4">
-        <div class="milestone-dot" style="background:var(--ion);box-shadow:0 0 20px var(--ion);animation:dotPulse 1s ease-in-out infinite"></div>
-        <div class="milestone-content">
-          <div class="milestone-year">APR 2025 — PRESENT</div>
-          <div class="milestone-title">Riota IoT Solutions</div>
-          <div class="milestone-desc">Flutter Developer. Cross-platform production apps. Enterprise-scale systems. REST API integrations. The mission is live. The code ships. The universe expands.</div>
-        </div>
-      </div>
+                        </div>
+                        <div class="slider-navigation-arrow left-arrow w-slider-arrow-left">
+                            <div class="w-icon-slider-left"></div>
+                        </div>
+                        <div class="slider-navigation-arrow right-arrow w-slider-arrow-right">
+                            <div class="w-icon-slider-right"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    </div>
-  </section>
+        <!-- ══════════════ QUOTE ══════════════ -->
+        <section class="section ending-section">
+            <div class="content-container">
+                <div class="quote-text-container">
+                    <div data-wf-target="[[[&quot;697ccdb3b74df8b40e0b77fe&quot;,&quot;cdab6bbd-207a-ff22-2c67-4697803f417e&quot;],[]]]">
+                        I build apps that feel inevitable — where every tap, every transition, and every data call works so cleanly that users never think about the engineering behind it. That invisibility is the craft.
+                    </div>
+                </div>
+            </div>
+        </section>
 
-  <!-- ═══ LAYER 7: COMMAND CENTER ═══ -->
-  <section id="layer-contact">
-    <div class="command-center">
-      <div class="section-eyebrow">// LAYER 07 — OPEN CHANNEL</div>
-      <h2 class="section-heading" style="margin-bottom:0.5rem">
-        Transmit<br>a <span class="accent">signal.</span>
-      </h2>
-      <p class="section-body" style="max-width:400px;margin:0 auto 0">
-        Ready to build something that doesn't look like anything else? The channel is open.
-      </p>
+        <!-- ══════════════ FOOTER / CONTACT ══════════════ -->
+        <footer id="contact" class="footer">
+            <div class="footer-top-element-grid">
+                <div class="footer-profile-stack">
+                    <div class="footer-profile-container">
+                        <div class="footer-profile-image">SV</div>
+                        <div class="footer-profile-name-flex">
+                            <div class="card-title">Shree Varshaa M S</div>
+                            <div class="large-text-1 medium-font-weight grey-text">Flutter Developer</div>
+                        </div>
+                    </div>
+                    <div class="large-text-1 grey-text">Looking for a developer who ships clean, scalable Flutter apps without sacrificing craft? Let's talk.</div>
+                    <div class="footer-button-flex">
+                        <a href="mailto:varshucodes@gmail.com" class="button w-inline-block">
+                            <div class="large-text-1">Email me</div>
+                            <div class="button-imge-wrapper">
+                                <img width="32" height="32" alt="" src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/6986bb7e24019c506117cb1d_material-symbols_arrow-forward-rounded.svg" loading="lazy" class="icon-imge" />
+                            </div>
+                        </a>
+                        <a href="tel:+918667382858" class="dark-button no-icon w-inline-block">
+                            <div class="large-text-1">+91 86673 82858</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="footer-c2a-flex">
+                    <h2>Ready to build something that works as good as it looks?</h2>
+                    <div class="large-text-1 grey-text">Let's create something extraordinary together.</div>
+                </div>
+            </div>
 
-      <div class="terminal-window">
-        <div class="terminal-header">
-          <div class="terminal-dot dot-red"></div>
-          <div class="terminal-dot dot-yellow"></div>
-          <div class="terminal-dot dot-green"></div>
-          <div class="terminal-title">sv_os terminal — contact.sh</div>
-        </div>
-        <div class="terminal-body">
-          <div class="t-line">$ whoami</div>
-          <div class="t-out">SHREE VARSHAA M S — Flutter Developer, Chennai</div>
-          <br>
-          <div class="t-line">$ status</div>
-          <div class="t-out">🟢 OPEN TO OPPORTUNITIES — Full-time · Contract · Freelance</div>
-          <br>
-          <div class="t-line">$ connect --email</div>
-          <div class="t-out">→ <a class="t-link" href="mailto:varshucodes@gmail.com">varshucodes@gmail.com</a></div>
-          <br>
-          <div class="t-line">$ connect --phone</div>
-          <div class="t-out">→ <a class="t-link" href="tel:+918667382858">+91 86673 82858</a></div>
-          <br>
-          <div class="t-line">$ connect --linkedin</div>
-          <div class="t-out">→ <a class="t-link" href="https://linkedin.com" target="_blank">linkedin.com/in/shree-varshaa</a></div>
-          <br>
-          <div class="t-line">$ connect --github</div>
-          <div class="t-out">→ <a class="t-link" href="https://github.com" target="_blank">github.com/shree-varshaa</a></div>
-          <br>
-          <div class="terminal-input-row">
-            <span class="prompt">$</span>
-            <input class="terminal-input" id="terminalInput" placeholder="type a message and press enter..." autocomplete="off">
-          </div>
-          <div id="terminalOutput" style="margin-top:0.5rem;color:var(--ion);min-height:1.5rem"></div>
-        </div>
-      </div>
+            <div class="footer-bottom-link-wrap">
+                <div class="footer-link-layer-stack">
+                    <div class="footer-link-grid">
+                        <div class="large-text-1 grey-text">Navigate</div>
+                        <div class="footer-link-flex">
+                            <a href="#about" class="white-text">About</a>
+                            <a href="#services" class="white-text">Skills</a>
+                            <a href="#work" class="white-text">Work</a>
+                        </div>
+                    </div>
+                    <div class="footer-link-grid">
+                        <div class="large-text-1 grey-text">Contact</div>
+                        <div class="footer-link-flex">
+                            <a href="mailto:varshucodes@gmail.com" class="white-text">varshucodes@gmail.com</a>
+                            <a href="https://linkedin.com" target="_blank" class="white-text">LinkedIn</a>
+                            <a href="https://github.com" target="_blank" class="white-text">GitHub</a>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <div class="grey-text">© 2025 — Shree Varshaa M S<br/>Chennai, Tamil Nadu</div>
+                </div>
+            </div>
+            <div class="footer-extention"></div>
+        </footer>
 
-      <div class="contact-channels">
-        <a class="channel" href="mailto:varshucodes@gmail.com">
-          <span class="channel-icon">✉️</span>
-          <div class="channel-label">Email</div>
-          <div class="channel-value">varshucodes@gmail.com</div>
-        </a>
-        <a class="channel" href="tel:+918667382858">
-          <span class="channel-icon">📡</span>
-          <div class="channel-label">Phone</div>
-          <div class="channel-value">+91 86673 82858</div>
-        </a>
-        <a class="channel" href="#" target="_blank">
-          <span class="channel-icon">💼</span>
-          <div class="channel-label">LinkedIn</div>
-          <div class="channel-value">shree-varshaa</div>
-        </a>
-        <a class="channel" href="#" target="_blank">
-          <span class="channel-icon">🔮</span>
-          <div class="channel-label">GitHub</div>
-          <div class="channel-value">shree-varshaa</div>
-        </a>
-      </div>
+    </div><!-- .page-wrapper -->
 
-      <div style="margin-top:4rem;padding-top:2rem;border-top:1px solid rgba(255,255,255,0.06);font-family:'Space Mono',monospace;font-size:0.6rem;color:rgba(255,255,255,0.2);letter-spacing:0.2em;text-align:center">
-        SHREE VARSHAA M S — DIGITAL UNIVERSE v1.0 — CHENNAI, INDIA — 2025
-      </div>
-    </div>
-  </section>
+    <!-- Webflow runtime -->
+    <script src="https://d3e54v103j8qbb.cloudfront.net/js/jquery-3.5.1.min.dc5e7f18c8.js?site=697ccdb1b74df8b40e0b771f" type="text/javascript" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/js/webflow.schunk.36b8fb49256177c8.js" type="text/javascript" integrity="sha384-4abIlA5/v7XaW1HMXKBgnUuhnjBYJ/Z9C1OSg4OhmVw9O3QeHJ/qJqFBERCDPv7G" crossorigin="anonymous"></script>
+    <script src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/js/webflow.schunk.a6b443526880b66c.js" type="text/javascript" integrity="sha384-pfjcZTTSdL9qPSEYDuJcjze2LA5LyR+TDQTmPhCLv54/VjYu7EaI+3WX9icbMKw5" crossorigin="anonymous"></script>
+    <script src="https://cdn.prod.website-files.com/697ccdb1b74df8b40e0b771f/js/webflow.b5d4c5af.dfaa8a7fe35fe686.js" type="text/javascript" integrity="sha384-u9W0KeeCyyIoub7A0O5pDmhsdYzojWfx+b37o0H9Gfjky9Njaim+1hEr/tRrGgFX" crossorigin="anonymous"></script>
+    <script src="https://cdn.prod.website-files.com/gsap/3.15.0/gsap.min.js" type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/gsap/3.15.0/ScrollTrigger.min.js" type="text/javascript"></script>
+    <script src="https://cdn.prod.website-files.com/gsap/3.15.0/SplitText.min.js" type="text/javascript"></script>
 
-</div><!-- #universe -->
-
-<script>
-// ═══════════════════════════════════════════
-// CUSTOM CURSOR
-// ═══════════════════════════════════════════
-const cursor = document.getElementById('cursor');
-const ring = document.getElementById('cursor-ring');
-let mx=0,my=0,rx=0,ry=0;
-
-document.addEventListener('mousemove',(e)=>{
-  mx=e.clientX; my=e.clientY;
-  cursor.style.left=mx+'px';
-  cursor.style.top=my+'px';
-});
-
-function animRing(){
-  rx+=(mx-rx)*0.12;
-  ry+=(my-ry)*0.12;
-  ring.style.left=rx+'px';
-  ring.style.top=ry+'px';
-  requestAnimationFrame(animRing);
-}
-animRing();
-
-// ═══════════════════════════════════════════
-// SCROLL PROGRESS
-// ═══════════════════════════════════════════
-const progress = document.getElementById('progress');
-window.addEventListener('scroll',()=>{
-  const pct = window.scrollY/(document.documentElement.scrollHeight-window.innerHeight)*100;
-  progress.style.width=pct+'%';
-});
-
-// ═══════════════════════════════════════════
-// PARTICLE CANVAS
-// ═══════════════════════════════════════════
-const pCanvas = document.getElementById('particle-canvas');
-const pCtx = pCanvas.getContext('2d');
-let particles=[];
-let W,H;
-
-function resizeCanvas(){
-  W=pCanvas.width=window.innerWidth;
-  H=pCanvas.height=window.innerHeight;
-}
-resizeCanvas();
-window.addEventListener('resize',resizeCanvas);
-
-class Particle{
-  constructor(){this.reset()}
-  reset(){
-    this.x=Math.random()*W;
-    this.y=Math.random()*H;
-    this.vx=(Math.random()-0.5)*0.4;
-    this.vy=(Math.random()-0.5)*0.4;
-    this.size=Math.random()*2+0.5;
-    this.opacity=Math.random()*0.6+0.2;
-    this.color=Math.random()>0.7?'#7b2fff':Math.random()>0.5?'#00ff88':'#00f0ff';
-  }
-  update(){
-    this.x+=this.vx+(mx/W-0.5)*0.3;
-    this.y+=this.vy+(my/H-0.5)*0.3;
-    if(this.x<0||this.x>W||this.y<0||this.y>H)this.reset();
-  }
-  draw(){
-    pCtx.save();
-    pCtx.globalAlpha=this.opacity;
-    pCtx.fillStyle=this.color;
-    pCtx.shadowBlur=6;
-    pCtx.shadowColor=this.color;
-    pCtx.beginPath();
-    pCtx.arc(this.x,this.y,this.size,0,Math.PI*2);
-    pCtx.fill();
-    pCtx.restore();
-  }
-}
-
-for(let i=0;i<200;i++)particles.push(new Particle());
-
-// Connection canvas
-const cCanvas = document.getElementById('connection-canvas');
-const cCtx = cCanvas.getContext('2d');
-function resizeCCanvas(){cCanvas.width=window.innerWidth;cCanvas.height=window.innerHeight}
-resizeCCanvas();
-window.addEventListener('resize',resizeCCanvas);
-
-function animParticles(){
-  pCtx.clearRect(0,0,W,H);
-  cCtx.clearRect(0,0,cCanvas.width,cCanvas.height);
-  
-  particles.forEach(p=>{p.update();p.draw()});
-  
-  // Draw connections near mouse
-  particles.forEach((p,i)=>{
-    const dx=p.x-mx, dy=p.y-my;
-    const dist=Math.sqrt(dx*dx+dy*dy);
-    if(dist<120){
-      cCtx.save();
-      cCtx.globalAlpha=(1-dist/120)*0.3;
-      cCtx.strokeStyle='rgba(0,240,255,0.8)';
-      cCtx.lineWidth=0.5;
-      cCtx.beginPath();
-      cCtx.moveTo(p.x,p.y);
-      cCtx.lineTo(mx,my);
-      cCtx.stroke();
-      cCtx.restore();
-    }
-    // Particle-to-particle
-    for(let j=i+1;j<particles.length;j++){
-      const p2=particles[j];
-      const dx2=p.x-p2.x, dy2=p.y-p2.y;
-      const d2=Math.sqrt(dx2*dx2+dy2*dy2);
-      if(d2<80){
-        cCtx.save();
-        cCtx.globalAlpha=(1-d2/80)*0.08;
-        cCtx.strokeStyle='rgba(0,240,255,0.5)';
-        cCtx.lineWidth=0.3;
-        cCtx.beginPath();
-        cCtx.moveTo(p.x,p.y);
-        cCtx.lineTo(p2.x,p2.y);
-        cCtx.stroke();
-        cCtx.restore();
-      }
-    }
-  });
-  
-  requestAnimationFrame(animParticles);
-}
-animParticles();
-
-// ═══════════════════════════════════════════
-// INTERSECTION OBSERVER — SCROLL REVEALS
-// ═══════════════════════════════════════════
-const observer = new IntersectionObserver((entries)=>{
-  entries.forEach(e=>{
-    if(e.isIntersecting) e.target.classList.add('visible');
-  });
-},{threshold:0.2});
-
-document.querySelectorAll('.flutter-text,.phone-assembly,.os-title,.skill-orb,.planet-card,.milestone').forEach(el=>observer.observe(el));
-
-// ═══════════════════════════════════════════
-// SKILL ORB MOUSE TRACKING
-// ═══════════════════════════════════════════
-document.querySelectorAll('.skill-orb').forEach(orb=>{
-  orb.addEventListener('mousemove',(e)=>{
-    const rect=orb.getBoundingClientRect();
-    const x=((e.clientX-rect.left)/rect.width*100).toFixed(1);
-    const y=((e.clientY-rect.top)/rect.height*100).toFixed(1);
-    orb.style.setProperty('--mx',x+'%');
-    orb.style.setProperty('--my',y+'%');
-  });
-});
-
-// ═══════════════════════════════════════════
-// ANIMATED BEAM SVG — API NODES
-// ═══════════════════════════════════════════
-const beamSvg = document.getElementById('beamSvg');
-
-function getNodeCenter(el,container){
-  const r1=el.getBoundingClientRect();
-  const r2=container.getBoundingClientRect();
-  return{
-    x:r1.left-r2.left+r1.width/2,
-    y:r1.top-r2.top+r1.height/2
-  };
-}
-
-function drawBeams(){
-  const net=document.getElementById('nodeNetwork');
-  if(!net)return;
-  const center=document.getElementById('nodeCenter');
-  const nodes=['nodeCloud','nodeApi','nodeDb','nodeIot'];
-  const colors=['rgba(123,47,255,0.6)','rgba(255,107,53,0.6)','rgba(0,255,136,0.6)','rgba(0,240,255,0.6)'];
-  
-  beamSvg.innerHTML='<defs>'+[...nodes].map((n,i)=>`
-    <linearGradient id="lg${i}" x1="0%" y1="0%" x2="100%" y2="0%">
-      <stop offset="0%" stop-color="${colors[i]}" stop-opacity="0"/>
-      <stop offset="50%" stop-color="${colors[i]}" stop-opacity="0.8"/>
-      <stop offset="100%" stop-color="${colors[i]}" stop-opacity="0"/>
-    </linearGradient>`).join('')+'</defs>';
-
-  const c=getNodeCenter(center,net);
-  
-  nodes.forEach((nid,i)=>{
-    const n=document.getElementById(nid);
-    if(!n)return;
-    const p=getNodeCenter(n,net);
-    const dur=1.5+i*0.3;
-    
-    const path=document.createElementNS('http://www.w3.org/2000/svg','path');
-    path.setAttribute('d',`M${p.x},${p.y} Q${(p.x+c.x)/2+30*(i%2?1:-1)},${(p.y+c.y)/2-30} ${c.x},${c.y}`);
-    path.setAttribute('fill','none');
-    path.setAttribute('stroke',colors[i]);
-    path.setAttribute('stroke-width','1');
-    path.setAttribute('stroke-dasharray','6,6');
-    path.setAttribute('stroke-opacity','0.5');
-    
-    const anim=document.createElementNS('http://www.w3.org/2000/svg','animate');
-    anim.setAttribute('attributeName','stroke-dashoffset');
-    anim.setAttribute('values','24;0');
-    anim.setAttribute('dur',dur+'s');
-    anim.setAttribute('repeatCount','indefinite');
-    path.appendChild(anim);
-    
-    // Moving dot on path
-    const dot=document.createElementNS('http://www.w3.org/2000/svg','circle');
-    dot.setAttribute('r','3');
-    dot.setAttribute('fill',colors[i]);
-    dot.setAttribute('filter','url(#blur)');
-    const motionAnim=document.createElementNS('http://www.w3.org/2000/svg','animateMotion');
-    motionAnim.setAttribute('dur',dur+'s');
-    motionAnim.setAttribute('repeatCount','indefinite');
-    motionAnim.setAttribute('begin',(i*0.4)+'s');
-    const mpath=document.createElementNS('http://www.w3.org/2000/svg','mpath');
-    const pathId='bp'+i;
-    path.setAttribute('id',pathId);
-    mpath.setAttribute('href','#'+pathId);
-    motionAnim.appendChild(mpath);
-    dot.appendChild(motionAnim);
-    
-    beamSvg.appendChild(path);
-    beamSvg.appendChild(dot);
-  });
-}
-
-// Draw beams when API section visible
-const apiObs=new IntersectionObserver((entries)=>{
-  if(entries[0].isIntersecting) setTimeout(drawBeams,300);
-},{threshold:0.3});
-const apiSection=document.getElementById('layer-api');
-if(apiSection)apiObs.observe(apiSection);
-
-window.addEventListener('resize',()=>{
-  if(document.getElementById('layer-api').getBoundingClientRect().top<window.innerHeight){
-    setTimeout(drawBeams,100);
-  }
-});
-
-// ═══════════════════════════════════════════
-// PLANET ZOOM
-// ═══════════════════════════════════════════
-const overlay = document.getElementById('projectOverlay');
-
-function enterPlanet(card,title,desc,tech){
-  document.getElementById('overlayType').textContent='// PROJECT WORLD';
-  document.getElementById('overlayTitle').textContent=title;
-  document.getElementById('overlayDesc').textContent=desc;
-  document.getElementById('overlayTech').textContent=tech;
-  overlay.style.display='flex';
-  overlay.style.animation='none';
-  setTimeout(()=>{
-    overlay.style.opacity='0';
-    overlay.style.transition='opacity 0.5s';
-    requestAnimationFrame(()=>requestAnimationFrame(()=>{overlay.style.opacity='1'}));
-  },10);
-}
-
-function exitPlanet(){
-  overlay.style.opacity='0';
-  setTimeout(()=>{overlay.style.display='none'},500);
-}
-
-overlay.addEventListener('click',(e)=>{
-  if(e.target===overlay)exitPlanet();
-});
-
-// ═══════════════════════════════════════════
-// TERMINAL INPUT
-// ═══════════════════════════════════════════
-const termIn=document.getElementById('terminalInput');
-const termOut=document.getElementById('terminalOutput');
-
-const responses={
-  'hello':'→ Hello, recruiter. Transmission received.',
-  'hi':'→ Signal acknowledged. How can SHREE OS assist?',
-  'hire':'→ Excellent decision. Channel: varshucodes@gmail.com',
-  'flutter':'→ Flutter: primary energy source. Dart language fluency: advanced.',
-  'experience':'→ Apr 2025 – Present: Flutter Developer @ Riota IoT Solutions.',
-  'skills':'→ STACK: Flutter · Dart · Firebase · REST APIs · Git · Python · HTML/CSS',
-  'projects':'→ Initiating project universe traversal... scroll to Layer 05.',
-  'contact':'→ Direct line: varshucodes@gmail.com | +91 86673 82858',
-  'help':'→ Available commands: hello · hire · flutter · experience · skills · projects · contact',
-};
-
-if(termIn){
-  termIn.addEventListener('keydown',(e)=>{
-    if(e.key==='Enter'){
-      const cmd=termIn.value.toLowerCase().trim();
-      const resp=responses[cmd]||`→ Unknown command: "${cmd}" — try "help"`;
-      termOut.textContent=resp;
-      termOut.style.color=cmd in responses?'var(--ion)':'var(--solar)';
-      termIn.value='';
-    }
-  });
-}
-
-// ═══════════════════════════════════════════
-// HOLOGRAPHIC RIPPLE ON CLICK
-// ═══════════════════════════════════════════
-document.addEventListener('click',(e)=>{
-  const ripple=document.createElement('div');
-  ripple.className='holo-ripple';
-  ripple.style.left=e.clientX+'px';
-  ripple.style.top=e.clientY+'px';
-  ripple.style.position='fixed';
-  ripple.style.zIndex='400';
-  ripple.style.pointerEvents='none';
-  document.body.appendChild(ripple);
-  setTimeout(()=>ripple.remove(),2000);
-});
-
-// ═══════════════════════════════════════════
-// MILESTONE PARALLAX
-// ═══════════════════════════════════════════
-window.addEventListener('scroll',()=>{
-  const y=window.scrollY;
-  const milestones=document.querySelectorAll('.milestone');
-  milestones.forEach((m,i)=>{
-    const offset=(y*0.02*(i%2?1:-1));
-    if(m.classList.contains('visible')){
-      m.style.transform=`translateX(${offset}px)`;
-    }
-  });
-});
-
-// ═══════════════════════════════════════════
-// STARFIELD GENERATION
-// ═══════════════════════════════════════════
-for(let i=0;i<80;i++){
-  const star=document.createElement('div');
-  star.className='starfield-dot';
-  const size=Math.random()*2+0.5;
-  star.style.cssText=`
-    width:${size}px;height:${size}px;
-    left:${Math.random()*100}%;top:${Math.random()*100}%;
-    --dur2:${2+Math.random()*4}s;--del:${Math.random()*5}s;
-    --base:${0.1+Math.random()*0.3};--peak:${0.5+Math.random()*0.5};
-  `;
-  document.body.appendChild(star);
-}
-
-// ═══════════════════════════════════════════
-// MOUSE PARALLAX ON SECTIONS
-// ═══════════════════════════════════════════
-document.addEventListener('mousemove',(e)=>{
-  const xPct=(e.clientX/window.innerWidth-0.5);
-  const yPct=(e.clientY/window.innerHeight-0.5);
-  document.querySelectorAll('.planet-sphere').forEach((s,i)=>{
-    s.style.transform=`rotate(${Date.now()*0.01}deg) translate(${xPct*(i+1)*3}px,${yPct*(i+1)*2}px)`;
-  });
-});
-
-console.log('%cSHREE VARSHAA — Digital Universe', 'color:#00f0ff;font-family:monospace;font-size:16px;font-weight:bold');
-console.log('%cvarshucodes@gmail.com | +91 86673 82858', 'color:#7b2fff;font-family:monospace;font-size:12px');
-</script>
+    <!-- Lenis smooth scroll -->
+    <script>
+        const lenis = new Lenis({ smooth: true, lerp: 0.1, wheelMultiplier: 1, infinite: false });
+        function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+        requestAnimationFrame(raf);
+    </script>
 </body>
 </html>
